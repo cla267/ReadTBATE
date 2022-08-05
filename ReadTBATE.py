@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import os
 import requests
 
+#modificato
 os.system('cls' if os.name == 'nt' else 'clear')
 path = os.getcwd() + '\\files\\'
 
