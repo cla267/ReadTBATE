@@ -1,10 +1,17 @@
 from bs4 import BeautifulSoup
 import os
 import requests
-
-#modificato
+#posix
 os.system('cls' if os.name == 'nt' else 'clear')
-path = os.getcwd() + '\\files\\'
+if os.name == 'nt':
+    filesDirectory = '\\files\\'
+elif os.name == 'posix':
+    filesDirectory = '/files/'
+else:
+    print('this operating system is not supported')
+    quit()
+
+path = os.getcwd() + filesDirectory
 
 nextType = ''
 
