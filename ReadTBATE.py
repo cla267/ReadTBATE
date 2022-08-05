@@ -1,12 +1,13 @@
 from bs4 import BeautifulSoup
 import os
 import requests
-#posix
+
 os.system('cls' if os.name == 'nt' else 'clear')
 if os.name == 'nt':
     filesDirectory = '\\files\\'
 elif os.name == 'posix':
     filesDirectory = '/files/'
+    print('remember, with this operating system you can not read, but you can see the list if you want')
 else:
     print('this operating system is not supported')
     quit()
