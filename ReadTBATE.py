@@ -30,6 +30,9 @@ for chapter in chapters:
     chapter_num_list.insert(0, int(chapter.find('a').text.split(' ')[-1]))
     chapter_link_list.insert(0, chapter.find('a')['href'])
 
+chapter_link_list.remove(chapter_link_list[-1])
+chapter_num_list.remove(chapter_num_list[-1])
+
 def Read(chapter_to_read):
     if chapter_to_read.isnumeric():
         chapter_to_read = int(chapter_to_read)
@@ -48,11 +51,6 @@ def Read(chapter_to_read):
 
     html_text = requests.get(url).text
     soup = BeautifulSoup(html_text, 'lxml')
-
-    # if chapter_to_read >= 150:
-    #     separators = soup.find_all('div', class_='wp-block-image')
-    # else:
-    #     separators = soup.find_all('div', class_='separator')
 
     separators = soup.find_all('div', class_='separator')
     
