@@ -1,3 +1,5 @@
+#!.\venv\Scripts\python.exe
+
 from bs4 import BeautifulSoup
 import os
 import requests
