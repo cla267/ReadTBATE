@@ -32,9 +32,6 @@ for chapter in chapters:
     chapter_num_list.insert(0, int(chapter.find('a').text.split(' ')[-1]))
     chapter_link_list.insert(0, chapter.find('a')['href'])
 
-chapter_link_list.remove(chapter_link_list[-1])
-chapter_num_list.remove(chapter_num_list[-1])
-
 def Read(chapter_to_read):
     if chapter_to_read.isnumeric():
         chapter_to_read = int(chapter_to_read)
