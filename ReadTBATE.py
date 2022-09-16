@@ -51,7 +51,10 @@ def Read(chapter_to_read):
     html_text = requests.get(url).text
     soup = BeautifulSoup(html_text, 'lxml')
 
-    separators = soup.find_all('div', class_='separator')
+    if chapter_to_read >= 156:
+        separators = soup.find_all('div', class_='wp-block-image')
+    else:
+        separators = soup.find_all('div', class_='separator')
     
     image_num = 0
 
@@ -179,7 +182,7 @@ while True:
     action = input('what do you want to do? ').lower()
     Sort()
 
-    commands = ['quit - exit', 'read', 'list', 'clear list', 'cls - clear', 'switch next', 'nxt - next - nx', 'canc - cancel - del - delete', 'chapters', 'sort']
+    commands = ['quit - exit', 'read', 'list', 'clear list', 'cls - clear', 'switch next', 'nxt - next - nx', 'canc - cancel - del - delete', 'chapters', 'sort', 'edit']
     
     match action:
         case 'quit' | 'exit':
@@ -235,5 +238,8 @@ while True:
             os.system('cls' if os.name == 'nt' else 'clear')
             for command in commands:
                 print(command)
+        case 'edit':
+            os.system('code .')
+            break
         case _:
             print('command does not exist')
