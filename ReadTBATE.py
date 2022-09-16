@@ -41,10 +41,10 @@ def Read(chapter_to_read):
     if chapter_to_read not in chapter_num_list:
         return 'chapter does not exist'
     
-    if chapter_to_read == chapter_num_list[-1]:
-        url = chapter_link_list[chapter_to_read - 1]
-        os.startfile(url)
-        return 'opened countdown'
+    # if chapter_to_read == chapter_num_list[-1]:
+    #     url = chapter_link_list[chapter_to_read - 1]
+    #     os.startfile(url)
+    #     return 'opened countdown'
 
     url = chapter_link_list[chapter_to_read - 1]
 
