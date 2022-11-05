@@ -51,7 +51,7 @@ def Read(chapter_to_read):
     html_text = requests.get(url).text
     soup = BeautifulSoup(html_text, 'lxml')
 
-    if chapter_to_read >= 156:
+    if chapter_to_read >= 156 and chapter_to_read <= 162:
         separators = soup.find_all('div', class_='wp-block-image')
     else:
         separators = soup.find_all('div', class_='separator')
