@@ -1,4 +1,4 @@
-#!./venv/Scripts/python
+#!./venv/bin/python
 
 from bs4 import BeautifulSoup
 import os
