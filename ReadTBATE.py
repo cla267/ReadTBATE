@@ -29,7 +29,10 @@ chapter_num_list = []
 chapter_link_list = []
 
 for chapter in chapters:
-    chapter_num_list.insert(0, int(chapter.find('a').text.split(' ')[-1]))
+    if "." in chapter.find('a').text.split(' ')[-1]:
+        chapter_num_list.insert(0, float(chapter.find('a').text.split(' ')[-1]))
+    else:
+        chapter_num_list.insert(0, int(chapter.find('a').text.split(' ')[-1]))
     chapter_link_list.insert(0, chapter.find('a')['href'])
 
 def Read(chapter_to_read):
