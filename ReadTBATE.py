@@ -7,6 +7,8 @@ import requests
 os.system('cls' if os.name == 'nt' else 'clear')
 if os.name == 'nt':
     filesDirectory = '\\files\\'
+    import pyautogui as pgui
+    pgui.press("F11")
 elif os.name == 'posix':
     filesDirectory = '/files/'
     print('remember, with this operating system you can not read, but you can see the list if you want')
@@ -18,7 +20,7 @@ path = os.getcwd() + filesDirectory
 
 nextType = ''
 
-home_url = 'https://thebeginningaftertheend.online'
+home_url = 'https://thebeginningaftertheend.online' # TBATE
 
 home_html = requests.get(home_url).text
 soup = BeautifulSoup(home_html, 'lxml')
