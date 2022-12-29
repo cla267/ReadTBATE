@@ -20,8 +20,8 @@ path = os.getcwd() + filesDirectory
 
 nextType = ''
 
-home_url = 'https://thebeginningaftertheend.online' # TBATE
-# home_url = 'https://damnreincarnation.com/' # Damn reincarnation
+# home_url = 'https://thebeginningaftertheend.online' # TBATE
+home_url = 'https://damnreincarnation.com/' # Damn reincarnation
 
 home_html = requests.get(home_url).text
 soup = BeautifulSoup(home_html, 'lxml')
@@ -57,7 +57,7 @@ def Read(chapter_to_read):
     html_text = requests.get(url).text
     soup = BeautifulSoup(html_text, 'lxml')
 
-    if chapter_to_read >= 156 and chapter_to_read <= 162:
+    if chapter_to_read == 29:
         separators = soup.find_all('div', class_='wp-block-image')
     else:
         separators = soup.find_all('div', class_='separator')
@@ -84,15 +84,15 @@ def Read(chapter_to_read):
                 html_write.close()
         
         print ("\033[A                             \033[A")
-    with open(path + 'list TBATE.txt', 'r') as file:
+    with open(path + 'list DR.txt', 'r') as file:
         contents = file.read().rstrip().split('\n')
         file.close()
 
-    with open(path + 'list TBATE.txt', 'a') as file:
+    with open(path + 'list DR.txt', 'a') as file:
         if str(chapter_to_read) not in contents:
             file.write(str(chapter_to_read) + '\n')
         file.close()
-    with open(path + 'last_read TBATE.txt', 'w') as file:
+    with open(path + 'last_read DR.txt', 'w') as file:
         file.write(str(chapter_to_read) + '\n' + nextType)
         file.close()
 
@@ -100,7 +100,7 @@ def Read(chapter_to_read):
 
 def List():
     try:
-        with open(path + 'list TBATE.txt', 'r') as file:
+        with open(path + 'list DR.txt', 'r') as file:
             contents = file.read().rstrip().split('\n')
             for content in contents:
                 print(content)
@@ -109,10 +109,10 @@ def List():
         print('something went wrong')
 
 def ClearList():
-    with open(path + 'list TBATE.txt', 'w') as file:
+    with open(path + 'list DR.txt', 'w') as file:
         file.write('you read chapters:\n')
         file.close()
-    with open(path + 'last_read TBATE.txt', 'w') as file:
+    with open(path + 'last_read DR.txt', 'w') as file:
         file.write('0' + '\n' + nextType)
         file.close()
     print('list cleared')
@@ -122,7 +122,7 @@ def CancelFromList():
     if selected_chapter.isnumeric() == False:
         return 'chapter needs to be a number'
     
-    with open(path + 'list TBATE.txt', 'r') as file:
+    with open(path + 'list DR.txt', 'r') as file:
         contents = file.read().rstrip().split('\n')
         file.close()
     
@@ -131,13 +131,13 @@ def CancelFromList():
     else:
         return 'chapter is not in the list'
     
-    with open(path + 'list TBATE.txt', 'w') as file:
+    with open(path + 'list DR.txt', 'w') as file:
         for line in contents:
             file.write(line + '\n')
         file.close()
 
 def Sort():
-    with open(path + 'list TBATE.txt', 'r') as file:
+    with open(path + 'list DR.txt', 'r') as file:
         contents = file.read().rstrip().split('\n')
         file.close()
     
@@ -149,20 +149,20 @@ def Sort():
 
     contents[0] = 'you read chapters:'
 
-    with open(path + 'list TBATE.txt', 'w') as file:
+    with open(path + 'list DR.txt', 'w') as file:
         for line in contents:
             file.write(str(line) + '\n')
         file.close()
 
 def NextToTheBigger():
-    with open(path + 'list TBATE.txt', 'r') as file:
+    with open(path + 'list DR.txt', 'r') as file:
         contents = file.read().rstrip().split('\n')
         file.close()
     
     return Read(str(int(contents[-1]) + 1))
 
 def NextToTheLast():
-    with open(path + 'last_read TBATE.txt', 'r') as file:
+    with open(path + 'last_read DR.txt', 'r') as file:
         contents = file.read().split('\n')
         content = contents[0]
         file.close()
@@ -183,7 +183,7 @@ def clear_console():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 while True:
-    with open(path + 'last_read TBATE.txt', 'r') as file:
+    with open(path + 'last_read DR.txt', 'r') as file:
         last_read_contents = file.read().split('\n')
         nextType = last_read_contents[-1]
         file.close()
@@ -216,12 +216,12 @@ while True:
             clear_console()
             match nextType:
                 case 'NextToTheBigger':
-                    with open(path + 'last_read TBATE.txt', 'w') as file:
+                    with open(path + 'last_read DR.txt', 'w') as file:
                         file.write(last_read_contents[0] + '\n' + 'NextToTheLast')
                         file.close()
                     print('switched to NextToTheLast')
                 case 'NextToTheLast':
-                    with open(path + 'last_read TBATE.txt', 'w') as file:
+                    with open(path + 'last_read DR.txt', 'w') as file:
                         file.write(last_read_contents[0] + '\n' + 'NextToTheBigger')
                         file.close()
                     print('switched to NextToTheBigger')
