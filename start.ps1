@@ -1,1 +1,1 @@
-./venv/Scripts/python.exe ReadTBATE.py
+./venv/Scripts/python.exe ReadDR.py

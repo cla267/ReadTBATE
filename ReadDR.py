@@ -3,6 +3,7 @@
 from bs4 import BeautifulSoup
 import os
 import requests
+from ruamel import yaml
 
 os.system('cls' if os.name == 'nt' else 'clear') # clears the console
 if os.name == 'nt':
@@ -17,8 +18,6 @@ else:
     quit()
 
 path = os.getcwd() + filesDirectory
-
-nextType = ''
 
 # home_url = 'https://thebeginningaftertheend.online' # TBATE
 home_url = 'https://damnreincarnation.com/' # Damn reincarnation
@@ -83,18 +82,15 @@ def Read(chapter_to_read):
                 html_write.write(f'<img src="{image_url}" align="absbottom">')
                 html_write.close()
         
-        print ("\033[A                             \033[A")
+        print ("\033[A                             \033[A") # clears the line on top
     with open(path + 'list DR.txt', 'r') as file:
         contents = file.read().rstrip().split('\n')
-        file.close()
 
     with open(path + 'list DR.txt', 'a') as file:
         if str(chapter_to_read) not in contents:
             file.write(str(chapter_to_read) + '\n')
-        file.close()
-    with open(path + 'last_read DR.txt', 'w') as file:
-        file.write(str(chapter_to_read) + '\n' + nextType)
-        file.close()
+    with open(path + 'data.yml', 'w') as file:
+        file.write(fileBackup.replace("last read DR: " + str(dataFile["last read DR"]), "last read DR: " + str(chapter_to_read)))
 
     os.startfile(path + 'index.html')
 
@@ -104,17 +100,15 @@ def List():
             contents = file.read().rstrip().split('\n')
             for content in contents:
                 print(content)
-            file.close()
+            return contents
     except:
         print('something went wrong')
 
 def ClearList():
     with open(path + 'list DR.txt', 'w') as file:
         file.write('you read chapters:\n')
-        file.close()
-    with open(path + 'last_read DR.txt', 'w') as file:
-        file.write('0' + '\n' + nextType)
-        file.close()
+    with open(path + 'data.yml', 'w') as file:
+        file.write(fileBackup.replace("last read DR: " + str(dataFile["last read DR"]), "last read DR: 0"))
     print('list cleared')
 
 def CancelFromList():
@@ -124,7 +118,6 @@ def CancelFromList():
     
     with open(path + 'list DR.txt', 'r') as file:
         contents = file.read().rstrip().split('\n')
-        file.close()
     
     if selected_chapter in contents:
         contents.remove(selected_chapter)
@@ -134,12 +127,10 @@ def CancelFromList():
     with open(path + 'list DR.txt', 'w') as file:
         for line in contents:
             file.write(line + '\n')
-        file.close()
 
 def Sort():
     with open(path + 'list DR.txt', 'r') as file:
         contents = file.read().rstrip().split('\n')
-        file.close()
     
     contents[0] = -1
     for content in contents:
@@ -152,28 +143,13 @@ def Sort():
     with open(path + 'list DR.txt', 'w') as file:
         for line in contents:
             file.write(str(line) + '\n')
-        file.close()
-
-def NextToTheBigger():
-    with open(path + 'list DR.txt', 'r') as file:
-        contents = file.read().rstrip().split('\n')
-        file.close()
-    
-    return Read(str(int(contents[-1]) + 1))
-
-def NextToTheLast():
-    with open(path + 'last_read DR.txt', 'r') as file:
-        contents = file.read().split('\n')
-        content = contents[0]
-        file.close()
-    return Read(str(int(content) + 1))
 
 def Next(nextType):
     match nextType:
         case 'NextToTheBigger':
-            return NextToTheBigger()
+            return Read(str(int(List()[-1]) + 1))
         case 'NextToTheLast':
-            return NextToTheLast()
+            return Read(str(int(dataFile["last read DR"]) + 1))
 
 def ChapterList():
     for chapter in chapter_num_list:
@@ -183,10 +159,11 @@ def clear_console():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 while True:
-    with open(path + 'last_read DR.txt', 'r') as file:
-        last_read_contents = file.read().split('\n')
-        nextType = last_read_contents[-1]
-        file.close()
+    with open(path + "data.yml", 'r') as file:
+        dataFile = yaml.safe_load(file)
+        nextType = dataFile["next type"]
+    with open(path + "data.yml", 'r') as file:
+        fileBackup = file.read()
 
     action = input('what do you want to do? ').lower()
     Sort()
@@ -216,14 +193,12 @@ while True:
             clear_console()
             match nextType:
                 case 'NextToTheBigger':
-                    with open(path + 'last_read DR.txt', 'w') as file:
-                        file.write(last_read_contents[0] + '\n' + 'NextToTheLast')
-                        file.close()
+                    with open(path + 'data.yml', 'w') as file:
+                        file.write(fileBackup.replace(nextType, "NextToTheLast"))
                     print('switched to NextToTheLast')
                 case 'NextToTheLast':
-                    with open(path + 'last_read DR.txt', 'w') as file:
-                        file.write(last_read_contents[0] + '\n' + 'NextToTheBigger')
-                        file.close()
+                    with open(path + 'data.yml', 'w') as file:
+                        file.write(fileBackup.replace(nextType, "NextToTheBigger"))
                     print('switched to NextToTheBigger')
             
         case 'nxt' | 'nx' | 'next':
