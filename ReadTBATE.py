@@ -19,8 +19,8 @@ else:
 
 path = os.getcwd() + filesDirectory
 
-# home_url = 'https://thebeginningaftertheend.online' # TBATE
-home_url = 'https://damnreincarnation.com/' # Damn reincarnation
+home_url = 'https://thebeginningaftertheend.online' # TBATE
+# home_url = 'https://damnreincarnation.com/' # Damn reincarnation
 
 home_html = requests.get(home_url).text
 soup = BeautifulSoup(home_html, 'lxml')
@@ -83,10 +83,10 @@ def Read(chapter_to_read):
                 html_write.close()
         
         print ("\033[A                             \033[A") # clears the line on top
-    with open(path + 'list DR.txt', 'r') as file:
+    with open(path + 'list TBATE.txt', 'r') as file:
         contents = file.read().rstrip().split('\n')
 
-    with open(path + 'list DR.txt', 'a') as file:
+    with open(path + 'list TBATE.txt', 'a') as file:
         if str(chapter_to_read) not in contents:
             file.write(str(chapter_to_read) + '\n')
     with open(path + 'data.yml', 'w') as file:
@@ -96,7 +96,7 @@ def Read(chapter_to_read):
 
 def List():
     try:
-        with open(path + 'list DR.txt', 'r') as file:
+        with open(path + 'list TBATE.txt', 'r') as file:
             contents = file.read().rstrip().split('\n')
             for content in contents:
                 print(content)
@@ -105,7 +105,7 @@ def List():
         print('something went wrong')
 
 def ClearList():
-    with open(path + 'list DR.txt', 'w') as file:
+    with open(path + 'list TBATE.txt', 'w') as file:
         file.write('you read chapters:\n')
     with open(path + 'data.yml', 'w') as file:
         file.write(fileBackup.replace(" last read TBATE: " + str(dataFile[" last read TBATE"]), " last read TBATE: 0"))
@@ -116,7 +116,7 @@ def CancelFromList():
     if selected_chapter.isnumeric() == False:
         return 'chapter needs to be a number'
     
-    with open(path + 'list DR.txt', 'r') as file:
+    with open(path + 'list TBATE.txt', 'r') as file:
         contents = file.read().rstrip().split('\n')
     
     if selected_chapter in contents:
@@ -124,12 +124,12 @@ def CancelFromList():
     else:
         return 'chapter is not in the list'
     
-    with open(path + 'list DR.txt', 'w') as file:
+    with open(path + 'list TBATE.txt', 'w') as file:
         for line in contents:
             file.write(line + '\n')
 
 def Sort():
-    with open(path + 'list DR.txt', 'r') as file:
+    with open(path + 'list TBATE.txt', 'r') as file:
         contents = file.read().rstrip().split('\n')
     
     contents[0] = -1
@@ -140,7 +140,7 @@ def Sort():
 
     contents[0] = 'you read chapters:'
 
-    with open(path + 'list DR.txt', 'w') as file:
+    with open(path + 'list TBATE.txt', 'w') as file:
         for line in contents:
             file.write(str(line) + '\n')
 
